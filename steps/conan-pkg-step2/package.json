@@ -26,6 +26,12 @@
           "id": "mo.projectDeps",
           "name": "MyOffice Package Explorer",
           "contextualTitle": "MyOffice Package Explorer"
+        },
+        {
+          "id": "mo.sysInfo",
+          "type": "webview",
+          "initialSize": 390,
+          "name": "System Info"
         }
       ]
     },

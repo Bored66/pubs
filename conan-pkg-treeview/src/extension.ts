@@ -65,8 +65,10 @@ export async function activate(context: vscode.ExtensionContext) {
 		console.log("Conan info command done.");
 	});
 	context.subscriptions.push(conanInfoCmd);
+	console.log("Before reading json");
 
 	const deps = await readJsonFile(conanInfoJsonPath);
+	console.log("After reading json");
 	projDeps.fillDeps(deps);
 	treeView = vscode.window.createTreeView(projDeps.viewType, {
 		treeDataProvider: projDeps,

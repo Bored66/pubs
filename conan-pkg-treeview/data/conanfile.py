@@ -19,7 +19,7 @@ class MGTConan(ConanFile):
     name = "mgt"
     homepage = ""
     description = ""
-    settings = "os", "arch", "compiler", "build_type", "target_abi"
+    settings = "os", "arch", "compiler", "build_type"
 
     tsnative_pkg_version = "0.4.16"
 
@@ -77,21 +77,16 @@ class MGTConan(ConanFile):
             tools.check_min_cppstd(self, 14)
 
     def requirements(self):
-        self.requires("zlib/1.2.12")
         self.requires("abseil/20211102.0")
         self.requires("benchmark/1.6.1")
         self.requires("expat/2.4.8")
         self.requires("libpng/1.6.37")
         self.requires("glm/0.9.9.8")
-        self.requires("rapidjson/master_27042022")
-        self.requires("yogaengine/0.1")
-        self.requires("libjpeg-turbo/2.1.3")
-        self.requires("freetype/2.12.0")
         self.requires("gtest/1.11.0")
         self.requires("miniz/2.2.0")
 
     def build_requirements(self):
-        self.build_requires("cmake/3.23.1")
+        # self.build_requires("cmake/3.23.1")
         self.build_requires("ninja/1.10.2")
 
     def run_environment(fn):
