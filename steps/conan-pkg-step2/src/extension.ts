@@ -1,8 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import * as child from 'child_process';
 import { DepNode, ProjectDeps } from './projectDeps';
+import { checkFor, checkForConan, fileExists, readJsonFile } from './utils';
+import { checkInfoView } from './check';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -28,6 +29,10 @@ export async function activate(context: vscode.ExtensionContext) {
 			vscode.window.showInformationMessage(`${conanCheck} successfully found on your machine.`);
 		}
 	});
+	const sysInfoViewProvider = new checkInfoView(context.extensionUri);
+	// SysInfoView.badgeTreeView = treeView;
+	context.subscriptions.push(
+		vscode.window.registerWebviewViewProvider(checkInfoView.viewType, sysInfoViewProvider));
 
 	context.subscriptions.push(disposableCmd);
 	context.subscriptions.push(disposableCmd2);
@@ -77,30 +82,3 @@ export async function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() { }
-
-export function checkForConan(): string | undefined {
-	return checkFor('conan -v');
-}
-
-export function checkFor(cmd: string): string | undefined {
-	try {
-		let result = child.execSync(cmd);
-		return result.toString('utf8').trim();
-	} catch (error) {
-		return "error: " + error;
-	}
-}
-export async function fileExists(filepath: vscode.Uri): Promise<boolean> {
-	try {
-		await vscode.workspace.fs.stat(filepath);
-	} catch {
-		return false;
-	}
-	return true;
-}
-export async function readJsonFile(jsonFile: vscode.Uri): Promise<any> {
-	const data = await vscode.workspace.fs.readFile(jsonFile);
-	const readStr = Buffer.from(data).toString('utf8');
-	const jsonObj = JSON.parse(readStr);
-	return jsonObj;
-}
