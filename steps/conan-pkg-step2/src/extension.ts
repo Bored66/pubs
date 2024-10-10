@@ -3,7 +3,8 @@
 import * as vscode from 'vscode';
 import { DepNode, ProjectDeps } from './projectDeps';
 import { checkFor, checkForConan, fileExists, readJsonFile } from './utils';
-import { checkInfoView } from './check';
+import { CheckInfoView } from './check';
+import { ProjectSettingsView } from './config';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -29,11 +30,13 @@ export async function activate(context: vscode.ExtensionContext) {
 			vscode.window.showInformationMessage(`${conanCheck} successfully found on your machine.`);
 		}
 	});
-	const sysInfoViewProvider = new checkInfoView(context.extensionUri);
+	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);
 	// SysInfoView.badgeTreeView = treeView;
 	context.subscriptions.push(
-		vscode.window.registerWebviewViewProvider(checkInfoView.viewType, sysInfoViewProvider));
+		vscode.window.registerWebviewViewProvider(CheckInfoView.viewType, sysInfoViewProvider));
 
+	const settingsView = new ProjectSettingsView(context.extensionUri);
+	context.subscriptions.push(vscode.window.registerWebviewViewProvider(ProjectSettingsView.viewType, settingsView));
 	context.subscriptions.push(disposableCmd);
 	context.subscriptions.push(disposableCmd2);
 

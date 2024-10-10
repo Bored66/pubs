@@ -28,6 +28,12 @@
           "contextualTitle": "MyOffice Package Explorer"
         },
         {
+          "id": "mo.manageProjectSettings",
+          "type": "webview",
+          "initialSize": 390,
+          "name": "Project config"
+        },
+        {
           "id": "mo.sysInfo",
           "type": "webview",
           "initialSize": 390,
