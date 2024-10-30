@@ -29,7 +29,10 @@
             selectFolderClicked('projectPath');
         });
     }
-    fields = ['name', 'project_type', 'build_type', 'tsnative_version', 'conan_profile', 'conan_profile_host', 'conan_profile_build'];
+    else {
+        
+    }
+    fields = ['name', 'project_type', 'build_type', 'tsnative_version', 'conan_profile'];
 
     if (Array.isArray(replace_fields)) {
         fields = replace_fields;

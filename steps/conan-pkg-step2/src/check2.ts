@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { checkForConan, getSimpleHtmlPage, getWebviewOptions } from './utils';
 
-export class CheckInfoView implements vscode.WebviewViewProvider {
+export class CheckInfoView2 implements vscode.WebviewViewProvider {
     public static readonly viewType = "mo.sysInfo";
     public static message: string = '';
     private _view?: vscode.WebviewView;
@@ -22,7 +22,7 @@ export class CheckInfoView implements vscode.WebviewViewProvider {
         let message = '<p>Preparing system info...';
         webviewView.webview.html = getSimpleHtmlPage(message);
         console.log("Checking from info on resolveWebviewView...");
-        CheckInfoView._checkOk = await this.runCheck();
+        let ok = await this.runCheck();
     }
     public async runCheck(): Promise<boolean> {
         if (this._view === undefined)

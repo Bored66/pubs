@@ -45,6 +45,7 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
 
     const profilesStr = getConanProfileHtml(profiles);
     const nonce = getNonce();
+    console.log(webview.cspSource);
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -55,11 +56,8 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
             (See the 'webview-sample' extension sample for img-src content security policy examples)
         -->
         <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <link href="${styleUri}" rel="stylesheet">
-
         <title>Project settings</title>
         <script nonce="${nonce}" src="${scriptUri}">
         </script>
@@ -68,29 +66,23 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
         <table>
         <tr><td>
         <label for="build_type">Build Type:</label>
+        <option>debug
+        <option>release
         <td>
-        <select id="build_type" name="build_type" size=1>
+        <select id="conan_profile" name="conan_profile" size=1>
         <tr><td>
         ${profilesStr}
         <tr><td>
         <td>
     <tr><td>
-    <label for="project_path">TS native custom seed:</label>
-    <td>
-    <select id="tsnative_use_custom_seed" name="tsnative_use_custom_seed" size=1>
-    <option>true
-    <option>false
-    <!--input type=button id="selectFolder" value="Select folder">
+    <input type=button id="selectFolder" value="Select folder">
     <td>
     <input id="project_path" name="project_path" size=24><br>
     <tr><td>
-    <input type=button id="Create" value="Create project"-->
+    <input type=button id="Create" value="Create project">
     <tr><th colspan=3>
     <label id="status">
     </table>
-    <script nonce="${nonce}">
-    init();
-    </script>
     </body>
     </html>`;
 }
