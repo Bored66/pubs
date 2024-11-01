@@ -29,14 +29,11 @@
             selectFolderClicked('projectPath');
         });
     }
-    else {
-        
-    }
     fields = ['name', 'project_type', 'build_type', 'tsnative_version', 'conan_profile'];
 
-    if (Array.isArray(replace_fields)) {
-        fields = replace_fields;
-    }
+    // if (Array.isArray(replace_fields)) {
+    //     fields = replace_fields;
+    // }
 
     fields.forEach(element => {
         const elementIt = document.getElementById(element);
@@ -44,7 +41,10 @@
             elementIt.addEventListener('change', () => {
                 fieldChanged(element);
             });
-            // sendLog('set handler for ' + element + ' OK');
+            sendLog('set handler for ' + element + ' OK');
+        }
+        else {
+            sendLog('Handler for ' + element + ' NOT set');
         }
     });
     vscode.postMessage({ type: 'Start save settings view/panel', value: 'end' });

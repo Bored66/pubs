@@ -28,7 +28,7 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
         webviewView.webview.html = ProjectSettingsView._getHtmlForWebview(webviewView.webview, this._extensionUri);
 
         webviewView.webview.onDidReceiveMessage(async (data) => {
-            console.log(data.type);
+            console.log(`${data.type} = ${data.value}`);
         });
     }
 
@@ -45,7 +45,7 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
 
     const profilesStr = getConanProfileHtml(profiles);
     const nonce = getNonce();
-    console.log(webview.cspSource);
+
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -59,17 +59,15 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="${styleUri}" rel="stylesheet">
         <title>Project settings</title>
-        <script nonce="${nonce}" src="${scriptUri}">
-        </script>
         </head>
         <body>
         <table>
         <tr><td>
         <label for="build_type">Build Type:</label>
-        <option>debug
-        <option>release
         <td>
-        <select id="conan_profile" name="conan_profile" size=1>
+        <select id="build_type" name="build_type" size=1>
+        <option>debug</option>
+        <option>release</option>
         <tr><td>
         ${profilesStr}
         <tr><td>
@@ -83,6 +81,8 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
     <tr><th colspan=3>
     <label id="status">
     </table>
+        <script nonce="${nonce}" src="${scriptUri}">
+        </script>
     </body>
     </html>`;
 }
