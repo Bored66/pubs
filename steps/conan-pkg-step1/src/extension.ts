@@ -28,7 +28,6 @@ export async function activate(context: vscode.ExtensionContext) {
 			vscode.window.showInformationMessage(`${conanCheck} successfully found on your machine.`);
 		}
 	});
-
 	context.subscriptions.push(disposableCmd);
 	context.subscriptions.push(disposableCmd2);
 
@@ -65,6 +64,11 @@ export async function activate(context: vscode.ExtensionContext) {
 		console.log("Conan info command done.");
 	});
 	context.subscriptions.push(conanInfoCmd);
+	let cmdId = 'conan-pkg.version';
+	let barItem = createBarItem(context, cmdId, 'darkred', "$(unfold) Info", "Conan Project Info");
+	barItem.show();
+
+	// vscode.window.setStatusBarMessage("message");
 
 	const deps = await readJsonFile(conanInfoJsonPath);
 	projDeps.fillDeps(deps);
@@ -103,4 +107,16 @@ export async function readJsonFile(jsonFile: vscode.Uri): Promise<any> {
 	const readStr = Buffer.from(data).toString('utf8');
 	const jsonObj = JSON.parse(readStr);
 	return jsonObj;
+}
+
+function createBarItem(context: vscode.ExtensionContext,
+	cmdId: string, color: string | vscode.ThemeColor,
+	text: string, tooltip: string): vscode.StatusBarItem {
+	const barItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 30);
+	barItem.command = cmdId;
+	context.subscriptions.push(barItem);
+	barItem.text = text;
+	barItem.tooltip = tooltip;
+	barItem.color = color;
+	return barItem;
 }
