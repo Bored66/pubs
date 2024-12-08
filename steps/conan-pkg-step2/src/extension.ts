@@ -23,12 +23,12 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	// let msg = vscode.window.setStatusBarMessage("Go find conan!");
-	// context.subscriptions.push(msg);
+	let msg = vscode.window.setStatusBarMessage("Go find conan!");
 	let cmdId = 'conan-pkg.version';
-	let barItem = createBarItem(context, cmdId, 'darkred', "$(unfold) Info", "Conan Project Info");
-	context.subscriptions.push(barItem);
+	let barItem = createBarItem(context, cmdId, 'darkblue', "$(info) Version Info", "Conan Version Info");
 	barItem.show();
+	setTimeout(() => { msg.dispose(); }, 15400);
+	// vscode.CustomExecution()
 
 	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);
 	// SysInfoView.badgeTreeView = treeView;
