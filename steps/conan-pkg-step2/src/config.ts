@@ -75,9 +75,10 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
     <tr><td>
     <input type=button id="selectFolder" value="Select folder">
     <td>
-    <input id="project_path" name="project_path" size=24><br>
+    <label id="project_path" name="project_path"></label><br>
     <tr><td>
-    <input type=button id="Create" value="Create project">
+    <tr><td>
+    <input type=button id="Create" value="Create profile">
     <tr><th colspan=3>
     <label id="status">
     </table>
