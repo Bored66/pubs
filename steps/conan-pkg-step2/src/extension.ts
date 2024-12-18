@@ -14,15 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "conan-pkg-treeview" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposableCmd = vscode.commands.registerCommand('conan-pkg.hellworld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from conan-pkg.hellworld!');
-	});
-	let disposableCmd2 = vscode.commands.registerCommand('conan-pkg.version', () => {
+	let disposableCmd = vscode.commands.registerCommand('conan-pkg.version', () => {
 		let conanCheck = checkForConan();
 		if (conanCheck === undefined || conanCheck.startsWith('error:')) {
 			vscode.window.showWarningMessage("Conan not found, you must install it");
@@ -30,6 +22,14 @@ export async function activate(context: vscode.ExtensionContext) {
 			vscode.window.showInformationMessage(`${conanCheck} successfully found on your machine.`);
 		}
 	});
+
+	let msg = vscode.window.setStatusBarMessage("Go find conan!");
+	let cmdId = 'conan-pkg.version';
+	let barItem = createBarItem(context, cmdId, 'darkblue', "$(info) Version Info", "Conan Version Info");
+	barItem.show();
+	setTimeout(() => { msg.dispose(); }, 15400);
+	// vscode.CustomExecution()
+
 	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);
 	// SysInfoView.badgeTreeView = treeView;
 	context.subscriptions.push(
@@ -38,7 +38,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	const settingsView = new ProjectSettingsView(context.extensionUri);
 	context.subscriptions.push(vscode.window.registerWebviewViewProvider(ProjectSettingsView.viewType, settingsView));
 	context.subscriptions.push(disposableCmd);
-	context.subscriptions.push(disposableCmd2);
+
+	// vscode.window.setStatusBarMessage("message");
 
 	let treeView: vscode.TreeView<any> | undefined = undefined;
 	const projDeps = new ProjectDeps;
@@ -85,3 +86,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() { }
+
+function createBarItem(context: vscode.ExtensionContext,
+	cmdId: string, color: string | vscode.ThemeColor,
+	text: string, tooltip: string): vscode.StatusBarItem {
+	const barItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1130);
+	barItem.command = cmdId;
+	context.subscriptions.push(barItem);
+	barItem.text = text;
+	barItem.tooltip = tooltip;
+	barItem.color = color;
+	return barItem;
+}

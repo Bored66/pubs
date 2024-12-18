@@ -43,10 +43,6 @@
     },
     "commands": [
       {
-        "command": "conan-pkg.hellworld",
-        "title": "HellWorld"
-      },
-      {
         "command": "conan-pkg.version",
         "title": "conan-version"
       },
