@@ -27,6 +27,7 @@ export async function readJsonFile(jsonFile: vscode.Uri): Promise<any> {
   const jsonObj = JSON.parse(readStr);
   return jsonObj;
 }
+
 export function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
   return {
     // Enable javascript in the webview
@@ -36,6 +37,7 @@ export function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptio
     localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'media')]
   };
 }
+
 export function getSimpleHtmlPage(message: string): string {
   return `<html lang="en">
     <style>

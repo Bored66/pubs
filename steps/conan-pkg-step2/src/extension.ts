@@ -6,12 +6,8 @@ import { checkFor, checkForConan, fileExists, readJsonFile } from './utils';
 import { CheckInfoView } from './check';
 import { ProjectSettingsView } from './config';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "conan-pkg-treeview" is now active!');
 
 	let disposableCmd = vscode.commands.registerCommand('conan-pkg.version', () => {
@@ -24,17 +20,18 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 
 	let msg = vscode.window.setStatusBarMessage("Go find conan!");
+	setTimeout(() => { msg.dispose(); }, 1500);
+
 	let cmdId = 'conan-pkg.version';
 	let barItem = createBarItem(context, cmdId, 'darkblue', "$(info) Version Info", "Conan Version Info");
 	barItem.show();
-	setTimeout(() => { msg.dispose(); }, 15400);
 	// vscode.CustomExecution()
 
 	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);
-	// SysInfoView.badgeTreeView = treeView;
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(CheckInfoView.viewType, sysInfoViewProvider));
 
+	// SysInfoView.badgeTreeView = treeView;
 	const settingsView = new ProjectSettingsView(context.extensionUri);
 	context.subscriptions.push(vscode.window.registerWebviewViewProvider(ProjectSettingsView.viewType, settingsView));
 	context.subscriptions.push(disposableCmd);
@@ -90,7 +87,7 @@ export function deactivate() { }
 function createBarItem(context: vscode.ExtensionContext,
 	cmdId: string, color: string | vscode.ThemeColor,
 	text: string, tooltip: string): vscode.StatusBarItem {
-	const barItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1130);
+	const barItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 30);
 	barItem.command = cmdId;
 	context.subscriptions.push(barItem);
 	barItem.text = text;
