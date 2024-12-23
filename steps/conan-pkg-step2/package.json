@@ -47,12 +47,29 @@
         "title": "conan-version"
       },
       {
+        "command": "mgt.conanUpdate",
+        "icon": "$(sync)",
+        "title": "conan update"
+      },
+      {
+        "command": "mgt.conanInspect",
+        "icon": "$(inspect)",
+        "title": "conan inspect"
+      },
+      {
         "command": "conan-pkg.conanInfo",
-        "icon": "$(lightbulb)",
+        "icon": "$(info)",
         "title": "package-info"
       }
     ],
     "menus": {
+      "view/title": [
+        {
+          "command": "mgt.conanUpdate",
+          "when": "view == mo.manageProjectSettings || view == mgt.manageProject",
+          "group": "navigation"
+        }
+      ],
       "view/item/context": [
         {
           "command": "conan-pkg.conanInfo",

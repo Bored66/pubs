@@ -1,4 +1,3 @@
-// https://github.com/microsoft/vscode-extension-samples/blob/main/webview-view-sample/media/main.js
 (function () {
     const vscode = acquireVsCodeApi();
 
@@ -19,21 +18,20 @@
             console.log(element + " not found");
         }
     });
+
     if (document.getElementById('Create')) {
         document.getElementById('Create').addEventListener('click', () => {
             createProjectClicked();
         });
     }
+
     if (document.getElementById('selectFolder')) {
         document.getElementById('selectFolder').addEventListener('click', () => {
             selectFolderClicked('projectPath');
         });
     }
-    fields = ['name', 'project_type', 'build_type', 'tsnative_version', 'conan_profile'];
 
-    // if (Array.isArray(replace_fields)) {
-    //     fields = replace_fields;
-    // }
+    fields = ['name', 'project_type', 'build_type', 'tsnative_version', 'conan_profile'];
 
     fields.forEach(element => {
         const elementIt = document.getElementById(element);

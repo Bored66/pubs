@@ -40,6 +40,8 @@ export class CheckInfoView implements vscode.WebviewViewProvider {
             checkOk = false;
         } else {
             let message = `<p>${conanCheck} successfully found on your machine.`;
+            let answer = await vscode.window.showWarningMessage("Conan not found, do you want to install it?", "Yes", "No", "Я не знаю");
+            console.log(answer);
             webviewView.webview.html = getSimpleHtmlPage(message);
         }
         return checkOk;
