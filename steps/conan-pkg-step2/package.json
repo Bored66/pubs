@@ -48,8 +48,21 @@
       },
       {
         "command": "mgt.conanUpdate",
-        "icon": "$(sync)",
+        "icon": "$(sync)","enablement": "false",
+        "category": "common",
         "title": "conan update"
+      },
+      {
+        "command": "mgt.conanAddProfile",
+        "icon": "$(plus)",
+        "category": "profile",
+        "title": "add profile"
+      },
+      {
+        "command": "mgt.conanEditProfile",
+        "icon": "$(edit)",
+        "category": "profile",
+        "title": "edit profile"
       },
       {
         "command": "mgt.conanInspect",
@@ -64,6 +77,16 @@
     ],
     "menus": {
       "view/title": [
+        {
+          "command": "mgt.conanAddProfile",
+          "when": "view == mo.manageProjectSettings",
+          "group": "navigation"
+        },
+        {
+          "command": "mgt.conanEditProfile",
+          "when": "view == mo.manageProjectSettings",
+          "group": "navigation"
+        },
         {
           "command": "mgt.conanUpdate",
           "when": "view == mo.manageProjectSettings || view == mgt.manageProject",
