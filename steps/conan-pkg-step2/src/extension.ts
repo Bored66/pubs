@@ -8,7 +8,7 @@ import { ProjectSettingsView } from './config';
 
 export async function activate(context: vscode.ExtensionContext) {
 
-	console.log('Congratulations, your extension "conan-pkg-treeview" is now active!');
+	console.log('Congratulations, your extension "conan-pkg-presets" is now active!');
 
 	let disposableCmd = vscode.commands.registerCommand('conan-pkg.version', () => {
 		let conanCheck = checkForConan();
@@ -19,12 +19,15 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	let msg = vscode.window.setStatusBarMessage("Go find conan!");
-	setTimeout(() => { msg.dispose(); }, 1500);
+	let msg = vscode.window.setStatusBarMessage("$(sync~spin) Go find conan!");
 
 	let cmdId = 'conan-pkg.version';
-	let barItem = createBarItem(context, cmdId, 'darkblue', "$(info) Version Info", "Conan Version Info");
+	let barItem = createBarItem(context, cmdId, 'darkblue', "$(loading~spin) Version Info", "Package Version Info");
+	barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+	barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
 	barItem.show();
+	// setTimeout(() => { if ()  }, 500);
+	setTimeout(() => { msg.dispose(); barItem.backgroundColor = ''; barItem.text = "$(chip) Version Info"; }, 12500);
 	// vscode.CustomExecution()
 
 	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);

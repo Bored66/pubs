@@ -28,7 +28,14 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
         webviewView.webview.html = ProjectSettingsView._getHtmlForWebview(webviewView.webview, this._extensionUri);
 
         webviewView.webview.onDidReceiveMessage(async (data) => {
-            console.log(`${data.type} = ${data.value}`);
+            if (data.name === 'log')
+            {
+                console.log(`${data.value}`);
+            }
+            else
+            {
+                console.log(`${data.name} = ${data.value}`);
+            }
         });
     }
 
@@ -58,29 +65,41 @@ export class ProjectSettingsView implements vscode.WebviewViewProvider {
         <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="${styleUri}" rel="stylesheet">
-        <title>Project settings</title>
+        <title>Preset settings</title>
         </head>
         <body>
         <table>
-        <tr><td>
+        <!-- tr><td>
         <label for="build_type">Build Type:</label>
         <td>
         <select id="build_type" name="build_type" size=1>
         <option>debug</option>
-        <option>release</option>
+        <option>release</option-->
         <tr><td>
         ${profilesStr}
         <tr><td>
         <td>
     <tr><td>
-    <input type=button id="selectFolder" value="Select folder">
+    <input type=button id="selectFolder" value="Select build folder">
     <td>
-    <label id="project_path" name="project_path"></label><br>
+    <label id="build_path" name="build_path"></label><br>
     <tr><td>
+    Preset name: <td><input id="preset_name">
     <tr><td>
-    <input type=button id="Create" value="Create profile">
-    <tr><th colspan=3>
+    <input type=button id="Save" value="Save preset">
+    <tr><th colspan=3 rowspan=1>
     <label id="status">
+    <hr></td></tr>
+    <tr><td>
+    Build <input type=checkbox id='build'>
+    <tr><td>
+    Install <input type=checkbox id='install'>
+    <tr><td>
+    Configure <input type=checkbox id='configure'>
+    <tr><td>
+    Test <input type=checkbox id='test'>
+    <tr><td>
+    <input type=button id="Run" value="Run preset">
     </table>
         <script nonce="${nonce}" src="${scriptUri}">
         </script>

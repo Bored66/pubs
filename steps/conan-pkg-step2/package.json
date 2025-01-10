@@ -47,20 +47,20 @@
         "title": "conan-version"
       },
       {
-        "command": "mgt.conanUpdate",
+        "command": "mgt.sysinfoUpdate",
         "icon": "$(sync)","enablement": "false",
         "category": "common",
-        "title": "conan update"
+        "title": "system info update"
       },
       {
         "command": "mgt.conanAddProfile",
-        "icon": "$(plus)",
+        "icon": "$(file-add)",
         "category": "profile",
         "title": "add profile"
       },
       {
         "command": "mgt.conanEditProfile",
-        "icon": "$(edit)",
+        "icon": "$(go-to-file)",
         "category": "profile",
         "title": "edit profile"
       },
@@ -88,8 +88,8 @@
           "group": "navigation"
         },
         {
-          "command": "mgt.conanUpdate",
-          "when": "view == mo.manageProjectSettings || view == mgt.manageProject",
+          "command": "mgt.sysinfoUpdate",
+          "when": "view == mo.sysInfo || viewHasSomeCollapsibleItem2 || activeLogOutput || view == mgt.manageProject",
           "group": "navigation"
         }
       ],
