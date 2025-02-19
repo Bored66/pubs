@@ -23,12 +23,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	let cmdId = 'conan-pkg.version';
 	let barItem = createBarItem(context, cmdId, 'darkblue', "$(loading~spin) Version Info", "Package Version Info");
-	barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
-	barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
 	barItem.show();
-	// setTimeout(() => { if ()  }, 500);
-	setTimeout(() => { msg.dispose(); barItem.backgroundColor = ''; barItem.text = "$(chip) Version Info"; }, 12500);
-	// vscode.CustomExecution()
+	// barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+	// barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+	setTimeout(() => { msg.dispose(); barItem.backgroundColor = ''; barItem.text = "$(chip) Version Info"; }, 1500);
 
 	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);
 	context.subscriptions.push(
@@ -39,13 +37,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.window.registerWebviewViewProvider(ProjectSettingsView.viewType, settingsView));
 	context.subscriptions.push(disposableCmd);
 
-	// vscode.window.setStatusBarMessage("message");
-
 	let treeView: vscode.TreeView<any> | undefined = undefined;
 	const projDeps = new ProjectDeps;
-	const conanFilePath = //"/home/eduard/repos/dsf/tsnative-new/compiler";
-	//"/home/borovitski/repos/dsf/conan-build/tsnative/compiler/"
-	vscode.Uri.joinPath(context.extensionUri, 'data');
+	const conanFilePath = vscode.Uri.joinPath(context.extensionUri, 'data');
 	const conanInfoJsonPath = vscode.Uri.joinPath(context.extensionUri, 'data', `prj-requires-db.json`);
 
 	if (await fileExists(conanInfoJsonPath)) {
