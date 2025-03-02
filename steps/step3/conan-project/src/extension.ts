@@ -26,7 +26,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	barItem.show();
 	// barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
 	// barItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
-	setTimeout(() => { msg.dispose(); barItem.backgroundColor = ''; barItem.text = "$(chip) Version Info"; }, 1500);
+	setTimeout(() => { msg.dispose(); barItem.backgroundColor = undefined; barItem.text = "$(chip) Version Info"; }, 1500);
 
 	const sysInfoViewProvider = new CheckInfoView(context.extensionUri);
 	context.subscriptions.push(

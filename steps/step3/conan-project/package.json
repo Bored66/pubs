@@ -10,16 +10,109 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:conan-project.helloWorld"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "project-manager",
+          "title": "MyOffice extension",
+          "icon": "$(lightbulb)"
+        }
+      ]
+    },
+    "views": {
+      "project-manager": [
+        {
+          "id": "mo.manageProject",
+          "name": "MyOffice Project",
+          "contextualTitle": "MyOffice Manager"
+        },
+        {
+          "id": "mo.projectDeps",
+          "name": "MyOffice Package Explorer"
+        },
+        {
+          "id": "mo.manageProjectSettings",
+          "type": "webview",
+          "initialSize": 390,
+          "name": "Project config"
+        },
+        {
+          "id": "mo.sysInfo",
+          "type": "webview",
+          "initialSize": 390,
+          "name": "System Info"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "mo.manageProject",
+        "contents": "More information about Conan can be found [here](https://docs.conan.io/2/index.html).\n[Add Project](command:mgt.tsnative.newProj)"
+      }
+    ],
     "commands": [
       {
-        "command": "conan-project.helloWorld",
-        "title": "Hello World"
+        "command": "conan-pkg.version",
+        "title": "conan-version"
+      },
+      {
+        "command": "mgt.sysinfoUpdate",
+        "icon": "$(sync)","enablement": "false",
+        "category": "common",
+        "title": "system info update"
+      },
+      {
+        "command": "mgt.conanAddProfile",
+        "icon": "$(file-add)",
+        "category": "profile",
+        "title": "add profile"
+      },
+      {
+        "command": "mgt.conanEditProfile",
+        "icon": "$(go-to-file)",
+        "category": "profile",
+        "title": "edit profile"
+      },
+      {
+        "command": "mgt.conanInspect",
+        "icon": "$(inspect)",
+        "title": "conan inspect"
+      },
+      {
+        "command": "conan-pkg.conanInfo",
+        "icon": "$(info)",
+        "title": "package-info"
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "mgt.conanAddProfile",
+          "when": "view == mo.manageProjectSettings",
+          "group": "navigation"
+        },
+        {
+          "command": "mgt.conanEditProfile",
+          "when": "view == mo.manageProjectSettings",
+          "group": "navigation"
+        },
+        {
+          "command": "mgt.sysinfoUpdate",
+          "when": "view == mo.sysInfo || viewHasSomeCollapsibleItem2 || activeLogOutput || view == mgt.manageProject",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "conan-pkg.conanInfo",
+          "when": "view == mo.projectDeps && viewItem == package",
+          "group": "inline"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
